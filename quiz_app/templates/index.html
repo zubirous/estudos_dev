@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Estudos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Quiz de Estudos</h1>
+            <p>Teste seus conhecimentos em Arquitetura, MySQL e Next.js</p>
+        </header>
+        
+        <div class="themes-container">
+            {% for theme_key, theme_data in themes.items() %}
+            <div class="theme-section">
+                <div class="theme-header">
+                    <h2>{{ theme_data.icon }} {{ theme_data.name }}</h2>
+                    <span class="theme-count">{{ theme_data.modules|length }} módulos</span>
+                </div>
+                
+                <div class="modules-grid">
+                    {% for module_path, module_info in theme_data.modules.items() %}
+                    <div class="module-card">
+                        {% if module_info.order_num != 999 %}
+                        <div class="module-number">{{ module_info.order_num }}</div>
+                        {% endif %}
+                        <h3>{{ module_info.short_name }}</h3>
+                        <p class="question-count">{{ module_info.count }} questões</p>
+                        <div class="module-actions">
+                            <a href="{{ url_for('study', topic_path=module_path) }}" class="btn-study">📖 Ver Estudos</a>
+                            <a href="{{ url_for('quiz', topic_path=module_path) }}" class="btn-start">Iniciar Quiz</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+

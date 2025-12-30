@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro - Quiz App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>❌ Erro</h1>
+        </header>
+        
+        <div class="quiz-container">
+            <div class="question-card" style="text-align: center;">
+                <h2>{{ error }}</h2>
+                <p style="color: #666; margin-top: 20px;">{{ message }}</p>
+                <div style="margin-top: 30px;">
+                    <a href="{{ url_for('index') }}" class="btn-home">Voltar ao Início</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

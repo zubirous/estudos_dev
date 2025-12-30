@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - {{ topic_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="quiz-header">
+            <h1>{{ topic_name }}</h1>
+            <div class="progress-info">
+                <span id="progress-text">Questão 1 de {{ total }}</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="quiz-container">
+            <div class="question-card" id="question-card">
+                <h2 id="question-text">Carregando...</h2>
+                
+                <div id="options-container"></div>
+                
+                <div class="quiz-actions">
+                    <button id="btn-submit" class="btn-submit" disabled>Responder</button>
+                    <button id="btn-next" class="btn-next" style="display: none;">Próxima Questão</button>
+                    <button id="btn-finish" class="btn-finish" style="display: none;">Ver Resultados</button>
+                </div>
+                
+                <div id="feedback" class="feedback" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='quiz.js') }}"></script>
+</body>
+</html>
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - {{ topic_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Resultados</h1>
+            <h2>{{ topic_name }}</h2>
+        </header>
+        
+        <div class="results-summary">
+            <div class="score-card">
+                <div class="score-circle">
+                    <span class="score-number">{{ score }}</span>
+                    <span class="score-total">/ {{ total }}</span>
+                </div>
+                <div class="score-percentage">{{ "%.1f"|format(percentage) }}%</div>
+                <div class="score-status">
+                    {% if percentage >= 70 %}
+                        🎉 Excelente!
+                    {% elif percentage >= 50 %}
+                        👍 Bom trabalho!
+                    {% else %}
+                        💪 Continue estudando!
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="answers-review">
+            <h3>Revisão das Respostas</h3>
+            {% for answer in answers %}
+            <div class="answer-item {{ 'correct' if answer.is_correct else 'incorrect' }}">
+                <div class="answer-header">
+                    <span class="answer-number">Questão {{ loop.index }}</span>
+                    <span class="answer-status">
+                        {% if answer.is_correct %}
+                            ✅ Correto
+                        {% else %}
+                            ❌ Incorreto
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="answer-question">{{ answer.question }}</div>
+                <div class="answer-details">
+                    <p><strong>Sua resposta:</strong> 
+                        {% if answer.question_data %}
+                            {% set q = answer.question_data %}
+                            {% if q.type == 'multiple_choice' %}
+                                {{ answer.answer }}) {{ q.options.get(answer.answer, '') }}
+                            {% elif q.type == 'true_false' %}
+                                {{ 'Verdadeiro' if answer.answer == 'V' else 'Falso' }}
+                            {% else %}
+                                {{ answer.answer }}
+                            {% endif %}
+                        {% else %}
+                            {% if answer.answer in ['V', 'F'] %}
+                                {{ 'Verdadeiro' if answer.answer == 'V' else 'Falso' }}
+                            {% else %}
+                                {{ answer.answer }}
+                            {% endif %}
+                        {% endif %}
+                    </p>
+                    <p><strong>Resposta correta:</strong> 
+                        {% if answer.question_data %}
+                            {% set q = answer.question_data %}
+                            {% if q.type == 'multiple_choice' %}
+                                {{ answer.correct_answer }}) {{ q.options.get(answer.correct_answer, '') }}
+                            {% elif q.type == 'true_false' %}
+                                {{ 'Verdadeiro' if answer.correct_answer == 'V' else 'Falso' }}
+                            {% else %}
+                                {{ answer.correct_answer }}
+                            {% endif %}
+                        {% else %}
+                            {% if answer.correct_answer in ['V', 'F'] %}
+                                {{ 'Verdadeiro' if answer.correct_answer == 'V' else 'Falso' }}
+                            {% else %}
+                                {{ answer.correct_answer }}
+                            {% endif %}
+                        {% endif %}
+                    </p>
+                    {% if answer.explanation %}
+                    <div class="answer-explanation">
+                        <strong>Explicação:</strong> {{ answer.explanation }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="results-actions">
+            <a href="{{ url_for('index') }}" class="btn-home">Voltar ao Início</a>
+        </div>
+    </div>
+</body>
+</html>
+

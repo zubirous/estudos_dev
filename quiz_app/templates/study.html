@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos - {{ topic_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='markdown.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📖 {{ topic_name }}</h1>
+            <div class="study-actions">
+                <a href="{{ url_for('quiz', topic_path=topic_path) }}" class="btn-start">Fazer Quiz</a>
+                <a href="{{ url_for('index') }}" class="btn-home">Voltar ao Início</a>
+            </div>
+        </header>
+        
+        <div class="study-container">
+            <div class="study-content markdown-body">
+                {{ content|safe }}
+            </div>
+        </div>
+        
+        <div class="study-footer">
+            <a href="{{ url_for('quiz', topic_path=topic_path) }}" class="btn-start">Fazer Quiz</a>
+            <a href="{{ url_for('index') }}" class="btn-home">Voltar ao Início</a>
+        </div>
+    </div>
+</body>
+</html>
+
